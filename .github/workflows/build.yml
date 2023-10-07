@@ -21,6 +21,12 @@ jobs:
         run: echo ${{ github.event.pull_request.base.ref || github.base_ref || github.event.release.target_commitish }}
         shell: bash
 
+      - name: Fake build
+        run: |
+          mkdir test
+          mv test.txt test
+        shell: bash
+
       - name: Upload test
         uses: actions/upload-artifact@v3
         with:

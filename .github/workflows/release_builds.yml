@@ -18,6 +18,10 @@ jobs:
       - name: ⏬ Checkout repo
         uses: actions/checkout@v4
 
+      - name: LS
+        run: ls -R
+        shell: bash
+
       - name: Download android-template
         uses: actions/download-artifact@v3
         with:
