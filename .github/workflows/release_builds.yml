@@ -19,11 +19,15 @@ jobs:
           result-encoding: json
           script: |
             const { repo, owner } = context.repo;
+            const date = new Date();
+            const year = date.getFullYear().toString();
+            const month = (date.getMonth() + 1).toString();
+            const day = (date.getDay() + 1).toString();
             await github.rest.repos.updateRelease({
               owner,
               repo,
               release_id: context.payload.release.id,
-              name: 'test-' + context.payload.release.name,
+              name: 'test-' + context.payload.release.name '-' + year + month + day,
             });
 
   release:
