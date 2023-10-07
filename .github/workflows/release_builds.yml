@@ -21,8 +21,8 @@ jobs:
             const { repo, owner } = context.repo;
             const date = new Date();
             const year = date.getFullYear().toString();
-            const month = (date.getMonth() + 1).toString();
-            const day = (date.getDay() + 1).toString();
+            const month = (date.getMonth() + 1).toString().padStart(2,"0");
+            const day = (date.getDay() + 1).toString().padStart(2,"0");
             await github.rest.repos.updateRelease({
               owner,
               repo,
