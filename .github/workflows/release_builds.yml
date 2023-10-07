@@ -7,6 +7,25 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  rename:
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⏬ Checkout repo
+        uses: actions/checkout@v4
+
+      - name: 📛 Rename release
+        uses: actions/github-script@v6
+        with:
+          result-encoding: json
+          script: |
+            const { repo, owner } = context.repo;
+            await github.rest.repos.updateRelease({
+              owner,
+              repo,
+              release_id: context.payload.release.id,
+              name: 'test-' + context.payload.release.name,
+            });
+
   release:
     runs-on: ubuntu-latest
     name: ${{ matrix.name }}
@@ -33,19 +52,12 @@ jobs:
         shell: bash
 
       - name: ⏫ Upload Release Asset
-        id: upload-release-asset
         uses: actions/github-script@v6
         with:
           result-encoding: json
           script: |
             const FS = require('node:fs')
             const { repo, owner } = context.repo;
-            await github.rest.repos.updateRelease({
-              owner,
-              repo,
-              release_id: context.payload.release.id,
-              name: '${{ matrix.name }}-' + context.payload.release.name,
-            });
             return await github.rest.repos.uploadReleaseAsset({
               owner,
               repo,
