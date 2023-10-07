@@ -18,18 +18,18 @@ jobs:
       - name: ⏬ Checkout repo
         uses: actions/checkout@v4
 
-      - name: LS
-        run: ls -R
-        shell: bash
-
-      - name: Download android-template
+      - name: Download build
         uses: actions/download-artifact@v3
         with:
           name: ${{ matrix.name }}
           path: ${{ matrix.name }}
 
+      - name: LS
+        run: ls -R
+        shell: bash
+
       - name: 📦 Pack build as zip
-        run: zip ${{ matrix.name }}.zip ${{ matrix.name }}
+        run: zip -r ${{ matrix.name }}.zip ${{ matrix.name }}
         shell: bash
 
       - name: ⏫ Upload Release Asset
