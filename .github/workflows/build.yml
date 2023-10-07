@@ -12,8 +12,17 @@ jobs:
       - name: ⏬ Checkout repo
         uses: actions/checkout@v4
 
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
+
+      - name: Log target branch
+        run: echo ${{ github.event.pull_request.base.ref || github.base_ref }}
+        shell: bash
+
       - name: Upload test
         uses: actions/upload-artifact@v3
         with:
           name: test
-          path: test.txt
+          path: test
