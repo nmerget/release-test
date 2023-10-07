@@ -40,6 +40,12 @@ jobs:
           script: |
             const FS = require('node:fs')
             const { repo, owner } = context.repo;
+            await github.rest.repos.updateRelease({
+              owner,
+              repo,
+              release_id: context.payload.release.id,
+              name: '${{ matrix.name }}-${{ context.payload.release.name }}',
+            });
             return await github.rest.repos.uploadReleaseAsset({
               owner,
               repo,
