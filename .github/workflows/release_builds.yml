@@ -30,7 +30,7 @@ jobs:
         with:
           result-encoding: json
           script: |
-            const { default: uploadAsset } = await import('${{ github.workspace }}/.github/scripts/upload-asset.js');
+            const { default: uploadAsset } = await import('${{ github.workspace }}/.github/scripts/upload-release-asset.js');
             const release_id = context.payload.release.id;
             const assetName = '${{ matrix.name }}';
             const assetPath = '${{ github.workspace }}/${{ matrix.name }}';
