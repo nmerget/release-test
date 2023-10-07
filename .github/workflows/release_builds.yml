@@ -35,7 +35,7 @@ jobs:
             return await github.rest.repos.uploadReleaseAsset({
               owner,
               repo,
-              context.payload.release.id,
+              release_id: context.payload.release.id,
               name: '${{ matrix.name }}',
               data: FS.readFileSync('${{ github.workspace }}/${{ matrix.name }}')
             });
