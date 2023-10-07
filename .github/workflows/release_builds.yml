@@ -24,6 +24,10 @@ jobs:
           name: ${{ matrix.name }}
           path: ${{ matrix.name }}
 
+      - name: 📦 Pack build as zip
+        run: zip ${{ matrix.name }}.zip ${{ matrix.name }}
+        shell: bash
+
       - name: ⏫ Upload Release Asset
         id: upload-release-asset
         uses: actions/github-script@v6
@@ -36,6 +40,6 @@ jobs:
               owner,
               repo,
               release_id: context.payload.release.id,
-              name: '${{ matrix.name }}',
-              data: FS.readFileSync('${{ github.workspace }}/${{ matrix.name }}')
+              name: '${{ matrix.name }}.zip',
+              data: FS.readFileSync('${{ github.workspace }}/${{ matrix.name }}.zip')
             });
