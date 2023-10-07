@@ -44,7 +44,7 @@ jobs:
               owner,
               repo,
               release_id: context.payload.release.id,
-              name: '${{ matrix.name }}-${{ context.payload.release.name }}',
+              name: '${{ matrix.name }}-' + context.payload.release.name,
             });
             return await github.rest.repos.uploadReleaseAsset({
               owner,
