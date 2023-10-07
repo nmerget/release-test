@@ -27,7 +27,7 @@ jobs:
               owner,
               repo,
               release_id: context.payload.release.id,
-              name: 'test-' + context.payload.release.name '-' + year + month + day,
+              name: 'test-' + context.payload.release.name + '-' + year + month + day,
             });
 
   release:
