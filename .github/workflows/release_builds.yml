@@ -1,0 +1,32 @@
+name: 🦅 Release Builds
+on:
+  workflow_call:
+
+concurrency:
+  group: ci-${{github.actor}}-${{github.head_ref || github.run_number}}-${{github.ref}}-android
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⏬ Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Download all artifacts
+        uses: ./.github/actions/download-all-artifacts
+
+      - name: Preview directory with artifacts
+        run: ls
+
+      - name: Upload binaries to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: '*.txt'
+          tag: ${{ github.ref }}
+          overwrite: 'true'
+          file_glob: 'true'

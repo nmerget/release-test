@@ -1,0 +1,10 @@
+name: Download all Godot artifacts
+description: Download all Godot artifacts.
+runs:
+  using: "composite"
+  steps:
+    - name: Download android-template
+      uses: actions/download-artifact@v3
+      with:
+        name: test
+        path: test.txt
