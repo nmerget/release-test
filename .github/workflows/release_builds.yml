@@ -30,8 +30,12 @@ jobs:
         with:
           result-encoding: json
           script: |
-            const { default: uploadAsset } = await import('${{ github.workspace }}/.github/scripts/upload-release-asset.js');
-            const release_id = context.payload.release.id;
-            const assetName = '${{ matrix.name }}';
-            const assetPath = '${{ github.workspace }}/${{ matrix.name }}';
-            return await uploadAsset({github, context, release_id, assetName, assetPath});
+            const FS = require('node:fs')
+            const { repo, owner } = context.repo;
+            return await github.rest.repos.uploadReleaseAsset({
+              owner,
+              repo,
+              context.payload.release.id,
+              name: '${{ matrix.name }}',
+              data: FS.readFileSync('${{ github.workspace }}/${{ matrix.name }}')
+            });
